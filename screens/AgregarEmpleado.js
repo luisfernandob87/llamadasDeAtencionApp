@@ -1,16 +1,5 @@
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Modal,
-  TouchableOpacity,
-} from "react-native";
+import { Button, StyleSheet, TextInput, View } from "react-native";
 import React, { useState } from "react";
-import { SelectList } from "react-native-dropdown-select-list";
-import DatePicker from "react-native-modern-datepicker";
-import { getFormatedDate } from "react-native-modern-datepicker";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";

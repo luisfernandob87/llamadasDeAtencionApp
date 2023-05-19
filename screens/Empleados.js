@@ -7,8 +7,6 @@ import {
   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import moment from "moment";
-import "moment/locale/es";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";

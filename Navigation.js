@@ -8,6 +8,7 @@ import Llamadas from "./screens/Llamadas";
 import Menu from "./screens/Menu";
 import Empleados from "./screens/Empleados";
 import AgregarEmpleado from "./screens/AgregarEmpleado";
+import Firma from "./screens/Firma";
 
 const AddStack = createNativeStackNavigator();
 
@@ -50,6 +51,15 @@ function MyStack() {
       <AddStack.Screen
         name="AgregarEmpleado"
         component={AgregarEmpleado}
+        options={{
+          title: "Agregar Empleado",
+          headerTitleAlign: "center",
+          headerTintColor: "#1976d2",
+        }}
+      />
+      <AddStack.Screen
+        name="Firma"
+        component={Firma}
         options={{
           title: "Agregar Empleado",
           headerTitleAlign: "center",
