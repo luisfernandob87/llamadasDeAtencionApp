@@ -28,7 +28,10 @@ const Empleados = () => {
         },
       };
       axios
-        .get("http://192.168.1.19:1337/api/empleados", config)
+        .get(
+          "http://192.168.1.19:1337/api/empleados?filters[estado][$eq]=true",
+          config
+        )
         .then((res) => setEmpleados(res.data.data));
     };
     getMultiple();
