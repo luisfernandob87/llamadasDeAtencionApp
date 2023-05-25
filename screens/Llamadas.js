@@ -148,49 +148,63 @@ const Llamadas = () => {
 
   return (
     <>
-      <ScrollView>
-        <Text>FORMATO DE ASESORÍA PARA MEJORAR</Text>
-        <Text>Fecha: {fecha}</Text>
-        <SelectList
-          setSelected={setSelected}
-          data={data}
-          placeholder="Nombre colaborador (a):"
-          searchPlaceholder="Buscar"
-        />
-        <SelectList
-          setSelected={setSelectedDepto}
-          data={dataDepto}
-          placeholder="Departamento:"
-          searchPlaceholder="Buscar"
-        />
-        <SelectList
-          setSelected={setSelectedPuesto}
-          data={dataPuesto}
-          placeholder="Puesto:"
-          searchPlaceholder="Buscar"
-        />
-        <SelectList
-          setSelected={setSelectedGrado}
-          data={datosGrado}
-          placeholder="Tipo de Llamada de Atención: "
-          searchPlaceholder="Buscar"
-        />
+      <ScrollView style={{ marginLeft: 10, marginRight: 10 }}>
+        <Text style={{ padding: 10, textAlign: "center" }}>
+          FORMATO DE ASESORÍA PARA MEJORAR
+        </Text>
+        <Text style={{ padding: 10 }}>Fecha: {fecha}</Text>
+        <View style={{ padding: 10 }}>
+          <SelectList
+            setSelected={setSelected}
+            data={data}
+            placeholder="Nombre colaborador (a):"
+            searchPlaceholder="Buscar"
+          />
+        </View>
+        <View style={{ padding: 10 }}>
+          <SelectList
+            setSelected={setSelectedDepto}
+            data={dataDepto}
+            placeholder="Departamento:"
+            searchPlaceholder="Buscar"
+          />
+        </View>
+        <View style={{ padding: 10 }}>
+          <SelectList
+            setSelected={setSelectedPuesto}
+            data={dataPuesto}
+            placeholder="Puesto:"
+            searchPlaceholder="Buscar"
+          />
+        </View>
+        <View style={{ padding: 10 }}>
+          <SelectList
+            setSelected={setSelectedGrado}
+            data={datosGrado}
+            placeholder="Tipo de Llamada de Atención: "
+            searchPlaceholder="Buscar"
+          />
+        </View>
         <TextInput
+          style={styles.input}
           value={descripcion}
           placeholder="Descripción"
           onChangeText={setDescripcion}
         />
         <TextInput
+          style={styles.input}
           value={accionCorrectiva}
           placeholder="Acción Correctiva"
           onChangeText={setAccionCorrectiva}
         />
         <TextInput
+          style={styles.input}
           value={compromiso}
           placeholder="Compromiso"
           onChangeText={setCompromiso}
         />
         <TextInput
+          style={styles.input}
           value={proximoGrado}
           placeholder="Próximo llamado de atención"
           onChangeText={setProximoGrado}
@@ -237,12 +251,14 @@ const Llamadas = () => {
               </View>
             </View>
           </Modal>
-          <Pressable
-            style={[styles.button, styles.buttonOpen]}
-            onPress={() => setModalVisible(true)}
-          >
-            <Text style={styles.textStyle}>Firma Colaborador</Text>
-          </Pressable>
+          <View style={styles.containerButton}>
+            <Pressable
+              style={[styles.button, styles.buttonOpen]}
+              onPress={() => setModalVisible(true)}
+            >
+              <Text style={styles.textStyle}>Firma Colaborador</Text>
+            </Pressable>
+          </View>
         </View>
         <View style={styles.centeredView}>
           <Modal
@@ -288,12 +304,14 @@ const Llamadas = () => {
               </View>
             </View>
           </Modal>
-          <Pressable
-            style={[styles.button, styles.buttonOpen]}
-            onPress={() => setModalVisibleJefeInmediato(true)}
-          >
-            <Text style={styles.textStyle}>Firma Jefe Inmediato</Text>
-          </Pressable>
+          <View style={styles.containerButton}>
+            <Pressable
+              style={[styles.button, styles.buttonOpen]}
+              onPress={() => setModalVisibleJefeInmediato(true)}
+            >
+              <Text style={styles.textStyle}>Firma Jefe Inmediato</Text>
+            </Pressable>
+          </View>
         </View>
         <View style={styles.centeredView}>
           <Modal
@@ -337,12 +355,14 @@ const Llamadas = () => {
               </View>
             </View>
           </Modal>
-          <Pressable
-            style={[styles.button, styles.buttonOpen]}
-            onPress={() => setModalVisibleRrhh(true)}
-          >
-            <Text style={styles.textStyle}>Firma RRHH o Testigo</Text>
-          </Pressable>
+          <View style={styles.containerButton}>
+            <Pressable
+              style={[styles.button, styles.buttonOpen]}
+              onPress={() => setModalVisibleRrhh(true)}
+            >
+              <Text style={styles.textStyle}>Firma RRHH o Testigo</Text>
+            </Pressable>
+          </View>
         </View>
       </ScrollView>
       <Button title="Crear" onPress={submit} />
@@ -379,6 +399,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     elevation: 2,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  containerButton: {
+    width: "100%",
   },
   buttonOpen: {
     backgroundColor: "#1976d2",
@@ -395,5 +420,15 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+  },
+  input: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    padding: 10,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderRadius: 10,
   },
 });
