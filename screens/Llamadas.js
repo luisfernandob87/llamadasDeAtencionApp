@@ -315,7 +315,7 @@ const Llamadas = () => {
 
         {showPickerImplementacion && (
           <DateTimePicker
-            display="spinner"
+            display="calendar"
             testID="dateTimePicker"
             value={dateImplementacion}
             mode="date"
@@ -363,7 +363,7 @@ const Llamadas = () => {
 
         {showPickerInicioCompromiso && (
           <DateTimePicker
-            display="spinner"
+            display="calendar"
             testID="dateTimePicker"
             value={dateInicioCompromiso}
             mode="date"
