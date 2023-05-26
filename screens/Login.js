@@ -1,4 +1,11 @@
-import { StyleSheet, View, TextInput, Button, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Button,
+  Image,
+  Alert,
+} from "react-native";
 import React, { useState } from "react";
 import logo from "../assets/Logotipo_Anvar_300.png";
 import axios from "axios";
@@ -17,16 +24,22 @@ const Login = () => {
   AsyncStorage.clear();
 
   const submit = () => {
-    axios.post("http://192.168.1.19:1337/api/auth/local", data).then((res) => {
-      const usr = ["userName", res.data.user.username];
-      const tkn = ["token", res.data.jwt];
-      try {
-        AsyncStorage.multiSet([usr, tkn]);
-      } catch (error) {
-        console.log("Done.");
-      }
-      navigation.navigate("Menu");
-    });
+    if (usuario == "" || password == "") {
+      Alert.alert("Ingrese usuario y contraseña");
+    } else {
+      axios
+        .post("http://192.168.1.19:1337/api/auth/local", data)
+        .then((res) => {
+          const usr = ["userName", res.data.user.username];
+          const tkn = ["token", res.data.jwt];
+          try {
+            AsyncStorage.multiSet([usr, tkn]);
+          } catch (error) {
+            console.log("Done.");
+          }
+          navigation.navigate("Menu");
+        });
+    }
     setPassword("");
     setUsuario("");
   };

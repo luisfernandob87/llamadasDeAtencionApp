@@ -51,7 +51,6 @@ const Menu = () => {
         style={{
           flex: 3,
           alignItems: "center",
-          maxWidth: 90,
           marginTop: "10%",
           maxHeight: 135,
         }}
@@ -59,7 +58,7 @@ const Menu = () => {
       >
         <Image
           source={empleado}
-          style={{ aspectRatio: 0.7, resizeMode: "contain" }}
+          style={{ aspectRatio: 0.6, resizeMode: "contain" }}
         />
         <Text style={styles.texto}>Empleados</Text>
       </TouchableOpacity>
@@ -67,7 +66,6 @@ const Menu = () => {
         style={{
           flex: 4,
           alignItems: "center",
-          maxWidth: 90,
           marginTop: "10%",
           maxHeight: 135,
         }}
@@ -75,7 +73,7 @@ const Menu = () => {
       >
         <Image
           source={llamada}
-          style={{ aspectRatio: 0.7, resizeMode: "contain" }}
+          style={{ aspectRatio: 0.6, resizeMode: "contain" }}
         />
         <Text style={styles.texto}>Llamadas de Atención</Text>
       </TouchableOpacity>
@@ -83,7 +81,6 @@ const Menu = () => {
         style={{
           flex: 5,
           alignItems: "center",
-          width: 90,
           marginTop: "10%",
           maxHeight: 135,
         }}
@@ -91,7 +88,7 @@ const Menu = () => {
       >
         <Image
           source={salida}
-          style={{ aspectRatio: 0.5, resizeMode: "contain" }}
+          style={{ aspectRatio: 0.4, resizeMode: "contain" }}
         />
         <Text style={styles.texto}>Cerrar Sesión</Text>
       </TouchableOpacity>

@@ -1,10 +1,18 @@
-import { Button, StyleSheet, TextInput, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  TextInput,
+  View,
+  ActivityIndicator,
+  Alert,
+} from "react-native";
 import React, { useState } from "react";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
 const AgregarEmpleado = () => {
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const [nombre, setNombre] = useState("");
 
@@ -29,17 +37,30 @@ const AgregarEmpleado = () => {
     },
   };
   const submit = () => {
-    //
-    console.log(config);
-    console.log(dataJson);
+    if (nombre == "") {
+      Alert.alert("Ingrese el nombre del empleado");
+    } else {
+      setLoading(true);
+      //
+      console.log(config);
+      console.log(dataJson);
 
-    axios
-      .post("http://192.168.1.19:1337/api/empleados", dataJson, config)
-      .then((res) => console.log(res));
-    navigation.navigate("Menu");
+      axios
+        .post("http://192.168.1.19:1337/api/empleados", dataJson, config)
+        .then((res) => console.log(res));
+      setLoading(false);
+
+      navigation.navigate("Menu");
+    }
   };
   return (
     <View style={styles.container}>
+      <ActivityIndicator
+        animating={loading}
+        size="large"
+        color="#1976d2"
+        style={{ marginTop: 30 }}
+      />
       <TextInput
         style={styles.inputs}
         value={nombre}

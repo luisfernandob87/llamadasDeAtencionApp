@@ -7,6 +7,8 @@ import {
   Modal,
   Pressable,
   Button,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
@@ -15,10 +17,13 @@ import AsyncStorage, {
 } from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import moment from "moment/moment";
+import "moment/locale/es";
 import { SelectList } from "react-native-dropdown-select-list";
 import Signature from "react-native-signature-canvas";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const Llamadas = () => {
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleJefeInmediato, setModalVisibleJefeInmediato] =
@@ -90,7 +95,7 @@ const Llamadas = () => {
   const [firmaJefe, setFirmaJefe] = useState("");
   const [firmaRrhh, setFirmaRrhh] = useState("");
   //
-
+  //
   const [value, setValue] = useState("");
   const { getItem, setItem } = useAsyncStorage("token");
 
@@ -99,49 +104,147 @@ const Llamadas = () => {
     setValue(item);
   };
   readItemFromStorage();
+  //
 
+  //
   const config = {
     headers: {
       Authorization: "Bearer " + value,
     },
   };
+  //
+  const [dateImplementacion, setDateImplementacion] = useState(new Date());
+  const [showPickerImplementacion, setShowPickerImplementacion] =
+    useState(false);
+  const [fechaImplementacion, setFechaImplementacion] = useState("");
 
+  const toggleDateImplementacion = () => {
+    setShowPickerImplementacion(!showPickerImplementacion);
+  };
+  const onChange = ({ type }, selectedDate) => {
+    if (type == "set") {
+      const currentDate = selectedDate;
+      setDateImplementacion(currentDate);
+      if (Platform.OS == "android") {
+        toggleDateImplementacion();
+        setFechaImplementacion(currentDate.toDateString());
+      }
+    } else {
+      toggleDateImplementacion();
+    }
+  };
+  const fechadeImplementacion =
+    moment(fechaImplementacion).format("YYYY-MM-DD");
+  //
+  const [dateInicioCompromiso, setDateInicioCompromiso] = useState(new Date());
+  const [showPickerInicioCompromiso, setShowPickerInicioCompromiso] =
+    useState(false);
+  const [fechaInicioCompromiso, setFechaInicioCompromiso] = useState("");
+
+  const toggleDateInicioCompromiso = () => {
+    setShowPickerInicioCompromiso(!showPickerInicioCompromiso);
+  };
+  const onChangeInicioCompromiso = ({ type }, selectedDate) => {
+    if (type == "set") {
+      const currentDate = selectedDate;
+      setDateInicioCompromiso(currentDate);
+      if (Platform.OS == "android") {
+        toggleDateInicioCompromiso();
+        setFechaInicioCompromiso(currentDate.toDateString());
+      }
+    } else {
+      toggleDateInicioCompromiso();
+    }
+  };
+  const fechadeInicioCompromiso = moment(fechaInicioCompromiso).format(
+    "YYYY-MM-DD"
+  );
+  //
+  const [dateFinalCompromiso, setDateFinalCompromiso] = useState(new Date());
+  const [showPickerFinalCompromiso, setShowPickerFinalCompromiso] =
+    useState(false);
+  const [fechaFinalCompromiso, setFechaFinalCompromiso] = useState("");
+
+  const toggleDateFinalCompromiso = () => {
+    setShowPickerFinalCompromiso(!showPickerFinalCompromiso);
+  };
+  const onChangeFinalCompromiso = ({ type }, selectedDate) => {
+    if (type == "set") {
+      const currentDate = selectedDate;
+      setDateFinalCompromiso(currentDate);
+      if (Platform.OS == "android") {
+        toggleDateFinalCompromiso();
+        setFechaFinalCompromiso(currentDate.toDateString());
+      }
+    } else {
+      toggleDateFinalCompromiso();
+    }
+  };
+  const fechadeFinalCompromiso =
+    moment(fechaFinalCompromiso).format("YYYY-MM-DD");
+
+  //
   const submit = () => {
-    const dataJson = {
-      data: {
-        departamento: {
-          id: selectedDepto,
-        },
-        empleado: {
-          id: selected,
-        },
-        puesto: {
-          id: selectedPuesto,
-        },
-        grado: selectedGrado,
-        descripcion: descripcion,
-        accionCorrectiva: accionCorrectiva,
-        compromiso: compromiso,
-        // creadoPor: usuario,
-        firmaJefeInmediato: firmaJefe,
-        firmaRrhh: firmaRrhh,
-        firmaColaborador: firmaColaborador,
-        // fechaImplementacion: data.fechaImplementacion,
-        // inicioCompromiso: data.fechaInicioCompromiso,
-        // finalCompromiso: data.fechaFinalCompromiso,
-        proximoGrado: proximoGrado,
-      },
-    };
-    // console.log(dataJson);
-    // console.log(config);
-    axios
-      .post(
-        "http://192.168.1.19:1337/api/llamadade-atencions",
-        dataJson,
-        config
-      )
-      .then((res) => console.log(res));
-    navigation.navigate("Menu");
+    if (
+      selectedDepto == "" ||
+      selected == "" ||
+      selectedPuesto == "" ||
+      selectedGrado == "" ||
+      descripcion == "" ||
+      accionCorrectiva == "" ||
+      compromiso == "" ||
+      firmaJefe == "" ||
+      firmaRrhh == "" ||
+      firmaColaborador == "" ||
+      fechadeImplementacion == "" ||
+      fechadeInicioCompromiso == "" ||
+      fechadeFinalCompromiso == "" ||
+      proximoGrado == ""
+    ) {
+      Alert.alert("Por favor llenar toda la información que se solicita");
+    } else {
+      setLoading(true);
+      getMyObject = async () => {
+        try {
+          const usuario = await AsyncStorage.getItem("userName");
+          const dataJson = {
+            data: {
+              departamento: {
+                id: selectedDepto,
+              },
+              empleado: {
+                id: selected,
+              },
+              puesto: {
+                id: selectedPuesto,
+              },
+              grado: selectedGrado,
+              descripcion: descripcion,
+              accionCorrectiva: accionCorrectiva,
+              compromiso: compromiso,
+              creadoPor: usuario,
+              firmaJefeInmediato: firmaJefe,
+              firmaRrhh: firmaRrhh,
+              firmaColaborador: firmaColaborador,
+              fechaImplementacion: fechadeImplementacion,
+              inicioCompromiso: fechadeInicioCompromiso,
+              finalCompromiso: fechadeFinalCompromiso,
+              proximoGrado: proximoGrado,
+            },
+          };
+          axios
+            .post(
+              "http://192.168.1.19:1337/api/llamadade-atencions",
+              dataJson,
+              config
+            )
+            .then((res) => console.log(res));
+        } catch (e) {}
+      };
+      getMyObject();
+      setLoading(false);
+      navigation.navigate("Menu");
+    }
   };
 
   const fecha = moment(new Date()).format("DD/MM/YYYY");
@@ -191,6 +294,36 @@ const Llamadas = () => {
           placeholder="Descripción"
           onChangeText={setDescripcion}
         />
+
+        <View style={styles.input}>
+          {!showPickerImplementacion && (
+            <Pressable onPress={toggleDateImplementacion}>
+              <TextInput
+                style={{ color: "black" }}
+                value={
+                  fechaImplementacion === ""
+                    ? "Fecha de Implementación"
+                    : moment(fechaImplementacion).format("DD/MM/YYYY")
+                }
+                onChangeText={setFechaImplementacion}
+                editable={false}
+                placeholder="Fecha de Implementación"
+              />
+            </Pressable>
+          )}
+        </View>
+
+        {showPickerImplementacion && (
+          <DateTimePicker
+            display="spinner"
+            testID="dateTimePicker"
+            value={dateImplementacion}
+            mode="date"
+            is24Hour={true}
+            locale="es-ES"
+            onChange={onChange}
+          />
+        )}
         <TextInput
           style={styles.input}
           value={accionCorrectiva}
@@ -209,6 +342,67 @@ const Llamadas = () => {
           placeholder="Próximo llamado de atención"
           onChangeText={setProximoGrado}
         />
+
+        <View style={styles.input}>
+          {!showPickerInicioCompromiso && (
+            <Pressable onPress={toggleDateInicioCompromiso}>
+              <TextInput
+                style={{ color: "black" }}
+                value={
+                  fechaInicioCompromiso === ""
+                    ? "Fecha de inicio de compromiso"
+                    : moment(fechaInicioCompromiso).format("DD/MM/YYYY")
+                }
+                onChangeText={setFechaInicioCompromiso}
+                editable={false}
+                placeholder="Fecha de inicio de compromiso"
+              />
+            </Pressable>
+          )}
+        </View>
+
+        {showPickerInicioCompromiso && (
+          <DateTimePicker
+            display="spinner"
+            testID="dateTimePicker"
+            value={dateInicioCompromiso}
+            mode="date"
+            is24Hour={true}
+            locale="es-ES"
+            onChange={onChangeInicioCompromiso}
+          />
+        )}
+
+        <View style={styles.input}>
+          {!showPickerFinalCompromiso && (
+            <Pressable onPress={toggleDateFinalCompromiso}>
+              <TextInput
+                style={{ color: "black" }}
+                value={
+                  fechaFinalCompromiso === ""
+                    ? "Fecha de final de compromiso"
+                    : moment(fechaFinalCompromiso).format("DD/MM/YYYY")
+                }
+                onChangeText={setFechaFinalCompromiso}
+                editable={false}
+                placeholder="Fecha de final de compromiso"
+              />
+            </Pressable>
+          )}
+        </View>
+
+        {showPickerFinalCompromiso && (
+          <DateTimePicker
+            display="calendar"
+            testID="dateTimePicker"
+            value={dateFinalCompromiso}
+            mode="date"
+            is24Hour={true}
+            locale="es-ES"
+            onChange={onChangeFinalCompromiso}
+          />
+        )}
+
         <View style={styles.centeredView}>
           <Modal
             animationType="slide"
@@ -363,6 +557,12 @@ const Llamadas = () => {
               <Text style={styles.textStyle}>Firma RRHH o Testigo</Text>
             </Pressable>
           </View>
+          <ActivityIndicator
+            animating={loading}
+            size="large"
+            color="#1976d2"
+            style={{ marginTop: 10, marginBottom: 10 }}
+          />
         </View>
       </ScrollView>
       <Button title="Crear" onPress={submit} />
