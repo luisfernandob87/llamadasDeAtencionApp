@@ -46,7 +46,7 @@ const AgregarEmpleado = () => {
       console.log(dataJson);
 
       axios
-        .post("http://192.168.1.19:1337/api/empleados", dataJson, config)
+        .post("https://anvar-demo.onrender.com/api/empleados", dataJson, config)
         .then((res) => console.log(res));
       setLoading(false);
 

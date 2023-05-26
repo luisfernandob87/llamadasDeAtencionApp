@@ -65,7 +65,7 @@ const Llamadas = () => {
         },
       };
       axios
-        .get("http://192.168.1.19:1337/api/empleados", config)
+        .get("https://anvar-demo.onrender.com/api/empleados", config)
         .then((res) => {
           let newArray = res.data.data.map((item) => {
             return { key: item.id, value: item.attributes.nombreCompleto };
@@ -73,19 +73,21 @@ const Llamadas = () => {
           setData(newArray);
         });
       axios
-        .get("http://192.168.1.19:1337/api/departamentos", config)
+        .get("https://anvar-demo.onrender.com/api/departamentos", config)
         .then((res) => {
           let newArray = res.data.data.map((item) => {
             return { key: item.id, value: item.attributes.descripcion };
           });
           setDataDepto(newArray);
         });
-      axios.get("http://192.168.1.19:1337/api/puestos", config).then((res) => {
-        let newArray = res.data.data.map((item) => {
-          return { key: item.id, value: item.attributes.descripcion };
+      axios
+        .get("https://anvar-demo.onrender.com/api/puestos", config)
+        .then((res) => {
+          let newArray = res.data.data.map((item) => {
+            return { key: item.id, value: item.attributes.descripcion };
+          });
+          setDataPuesto(newArray);
         });
-        setDataPuesto(newArray);
-      });
     };
     getMultiple();
   }, []);
@@ -234,7 +236,7 @@ const Llamadas = () => {
           };
           axios
             .post(
-              "http://192.168.1.19:1337/api/llamadade-atencions",
+              "https://anvar-demo.onrender.com/api/llamadade-atencions",
               dataJson,
               config
             )

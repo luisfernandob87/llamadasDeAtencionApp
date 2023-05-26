@@ -28,7 +28,7 @@ const Login = () => {
       Alert.alert("Ingrese usuario y contraseña");
     } else {
       axios
-        .post("http://192.168.1.19:1337/api/auth/local", data)
+        .post("https://anvar-demo.onrender.com/api/auth/local", data)
         .then((res) => {
           const usr = ["userName", res.data.user.username];
           const tkn = ["token", res.data.jwt];
