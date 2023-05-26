@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "llamada-de-atencion-app",
-    "slug": "llamada-de-atencion-app",
+    "name": "llamadadeAtencionApp",
+    "slug": "llamadadeAtencionApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -21,10 +19,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.luisfernandob87.llamadadeatencionapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "186b24d4-304f-4617-9aa4-b9fd71167e4e"
+      }
     }
   }
 }
